@@ -35,11 +35,10 @@ function oldScrabbleScorer(word) {
 function initialPrompt() {
    console.log("Let's play some scrabble!");
    let userWord = input.question("Enter a word to score: ");
-   // while (userWord.toUpperCase().split(""))
    return userWord;
 };
 
-// console.log(oldScrabbleScorer(initialPrompt()));
+
 
 
 let simpleScorer = function (word) {
@@ -62,7 +61,14 @@ let vowelBonusScorer = function (word) {
    return score;
 };
 
-let scrabbleScorer = oldScrabbleScorer;
+let scrabbleScorer = function (word) {
+   word = word.toLowerCase();
+   let score = 0;
+   for (let i = 0; i < word.length; i++) {
+      score += newPointStructure[`${word[i]}`];
+   }
+   return score;
+};
 
 let simpleObject = {
    'name' : 'Simple Score',
@@ -98,9 +104,17 @@ function scorerPrompt() {
    return scoringAlgorithms[userAlgorithm];
 };
 
-function transform() {};
+function transform(oldObject) {
+   let newObject = {};
+   for (let key in oldObject) {
+      for (let i = 0; i < oldObject[key].length; i++) {
+         newObject[`${oldObject[key][i].toLowerCase()}`] = Number(key);
+      }
+   }
+   return newObject;
+};
 
-let newPointStructure;
+let newPointStructure = transform(oldPointStructure);
 
 function runProgram() {
    let userWord = initialPrompt();
@@ -111,26 +125,6 @@ function runProgram() {
 
 }
 
-/* 
-Tests to pass:
-   ✕ transform returns an object (5 ms)
-    ✕ transform returns an object that is not empty (1 ms)
-    ✕ transform returns an object with letter keys
-    ✕ transform returns an object with integer values
-    ✕ newPointStructure contains the correct key-value pairs (3 ms)
-    ✕ contains a simpleScorer function (1 ms)
-    ✕ simpleScorer returns an integer score
-    ✕ simpleScorer returns a score equal to the length of its input
-    ✕ contains a vowelBonusScorer function
-    ✕ vowelBonusScorer returns an integer score
-    ✕ vowelBonusScorer returns three points per vowel
-    ✕ vowelBonusScorer returns one point per consonant (1 ms)
-    ✕ contains a scrabbleScorer function (1 ms)
-    ✕ scrabbleScorer returns an integer score
-    ✕ scrabbleScorer uses transform() to score a word
-    ✕ contains a scoringAlgorithms array of three scoring objects (1 ms)
-    ✕ scoringAlgorithms contain three scoring objects
-*/
 // Don't write any code below this line //
 // And don't change these or your program will not run as expected //
 module.exports = {
