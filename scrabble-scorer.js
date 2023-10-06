@@ -98,7 +98,7 @@ function scorerPrompt() {
          `);
    }
    let userAlgorithm = input.question("Enter 0, 1, or 2: ");
-   while (!(Number(userAlgorithm) >= 0 || Number(userAlgorithm) <= 3)) {
+   while (!(Number(userAlgorithm) >= 0) || !(Number(userAlgorithm) <= 3) || Number(userAlgorithm)===NaN) {
       userAlgorithm = input.question("Invalid. Enter 0, 1, or 2: ");
    }
    return scoringAlgorithms[userAlgorithm];
@@ -120,7 +120,7 @@ function runProgram() {
    let userWord = initialPrompt();
    let scoreType = scorerPrompt();
    console.log(
-      `\nScore count for '${userWord}': ${scoreType.scoringFunction(userWord)}\n`
+      `\nScore count for '${userWord}': ${scoreType.scorerFunction(userWord)}\n`
       );
 
 }
